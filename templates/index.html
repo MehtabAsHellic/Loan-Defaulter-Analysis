@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Default Risk Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Loan Default Risk Predictor</h1>
+            <p>Enter the loan details below to predict the default risk</p>
+        </header>
+        <main>
+            <form id="loan-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="person_age">Age</label>
+                        <input type="number" id="person_age" name="person_age" required min="18" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="person_income">Annual Income ($)</label>
+                        <input type="number" id="person_income" name="person_income" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="personhomeownership">Home Ownership</label>
+                        <select id="personhomeownership" name="personhomeownership" required>
+                            <option value="RENT">Rent</option>
+                            <option value="OWN">Own</option>
+                            <option value="MORTGAGE">Mortgage</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="personemplength">Employment Length (years)</label>
+                        <input type="number" id="personemplength" name="personemplength" required min="0" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="loan_intent">Loan Intent</label>
+                        <select id="loan_intent" name="loan_intent" required>
+                            <option value="PERSONAL">Personal</option>
+                            <option value="EDUCATION">Education</option>
+                            <option value="MEDICAL">Medical</option>
+                            <option value="VENTURE">Venture</option>
+                            <option value="HOMEIMPROVEMENT">Home Improvement</option>
+                            <option value="DEBTCONSOLIDATION">Debt Consolidation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="loan_grade">Loan Grade</label>
+                        <select id="loan_grade" name="loan_grade" required>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="loan_amnt">Loan Amount ($)</label>
+                        <input type="number" id="loan_amnt" name="loan_amnt" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="loanintrate">Interest Rate (%)</label>
+                        <input type="number" id="loanintrate" name="loanintrate" required min="0" max="100" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="loanpercentincome">Loan Percent Income (%)</label>
+                        <input type="number" id="loanpercentincome" name="loanpercentincome" required min="0" max="100" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="cbpersondefaultonfile">Past Default</label>
+                        <select id="cbpersondefaultonfile" name="cbpersondefaultonfile" required>
+                            <option value="N">No</option>
+                            <option value="Y">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cbpresoncredhistlength">Credit History Length (years)</label>
+                        <input type="number" id="cbpresoncredhistlength" name="cbpresoncredhistlength" required min="0" step="0.1">
+                    </div>
+                </div>
+                <button type="submit">Predict Default Risk</button>
+            </form>
+            <div id="result" class="hidden">
+                <h2>🎯 Prediction Results</h2>
+                <div class="result-grid">
+                    <div class="result-item">
+                        <h3>Logistic Regression</h3>
+                        <div class="probability-bar">
+                            <div id="lr-prob-bar" class="probability-fill"></div>
+                        </div>
+                        <p><span id="lr-prob"></span></p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Random Forest</h3>
+                        <div class="probability-bar">
+                            <div id="rf-prob-bar" class="probability-fill"></div>
+                        </div>
+                        <p><span id="rf-prob"></span></p>
+                    </div>
+                    <div class="result-item">
+                        <h3>XGBoost</h3>
+                        <div class="probability-bar">
+                            <div id="xgb-prob-bar" class="probability-fill"></div>
+                        </div>
+                        <p><span id="xgb-prob"></span></p>
+                    </div>
+                    <div class="result-item">
+                        <h3>Average Probability</h3>
+                        <div class="probability-bar">
+                            <div id="avg-prob-bar" class="probability-fill"></div>
+                        </div>
+                        <p><span id="avg-prob"></span></p>
+                    </div>
+                </div>
+                <div id="risk-assessment">
+                    <h3>Risk Assessment: <span id="risk-level"></span></h3>
+                </div>
+                <div id="key-risk-factors">
+                    <h3>⚠️ Key Risk Factors:</h3>
+                    <ul id="risk-factors-list"></ul>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; Project Loan Defualter 2024</p>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
